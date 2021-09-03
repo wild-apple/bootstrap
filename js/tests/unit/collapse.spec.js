@@ -322,6 +322,7 @@ describe('Collapse', () => {
 
       parentBtn.click()
     })
+
     it('should not change tab tabpanels descendants on accordion', done => {
       fixtureEl.innerHTML = [
         '<div class="accordion" id="accordionExample">',

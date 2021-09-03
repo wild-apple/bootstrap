@@ -232,6 +232,7 @@ describe('Backdrop', () => {
       })
     })
   })
+
   describe('Config', () => {
     describe('rootElement initialization', () => {
       it('Should be appended on "document.body" by default', done => {
