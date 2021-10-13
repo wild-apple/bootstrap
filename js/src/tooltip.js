@@ -628,7 +628,7 @@ class Tooltip extends BaseComponent {
   }
 
   _isWithActiveTrigger() {
-    return Object.values(this._activeTrigger).includes(true)
+    return Object.values(this._activeTrigger).some(true)
   }
 
   _getConfig(config) {
