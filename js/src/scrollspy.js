@@ -1,6 +1,6 @@
 /**
  * --------------------------------------------------------------------------
- * Bootstrap (v5.1.2): scrollspy.js
+ * Bootstrap (v5.1.3): scrollspy.js
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  * --------------------------------------------------------------------------
  */
@@ -17,27 +17,13 @@ import SelectorEngine from './dom/selector-engine'
 import BaseComponent from './base-component'
 
 /**
- * ------------------------------------------------------------------------
  * Constants
- * ------------------------------------------------------------------------
  */
 
 const NAME = 'scrollspy'
 const DATA_KEY = 'bs.scrollspy'
 const EVENT_KEY = `.${DATA_KEY}`
 const DATA_API_KEY = '.data-api'
-
-const Default = {
-  offset: 10,
-  method: 'auto',
-  target: ''
-}
-
-const DefaultType = {
-  offset: 'number',
-  method: 'string',
-  target: '(string|element)'
-}
 
 const EVENT_ACTIVATE = `activate${EVENT_KEY}`
 const EVENT_SCROLL = `scroll${EVENT_KEY}`
@@ -58,10 +44,20 @@ const SELECTOR_DROPDOWN_TOGGLE = '.dropdown-toggle'
 const METHOD_OFFSET = 'offset'
 const METHOD_POSITION = 'position'
 
+const Default = {
+  offset: 10,
+  method: 'auto',
+  target: ''
+}
+
+const DefaultType = {
+  offset: 'number',
+  method: 'string',
+  target: '(string|element)'
+}
+
 /**
- * ------------------------------------------------------------------------
- * Class Definition
- * ------------------------------------------------------------------------
+ * Class definition
  */
 
 class ScrollSpy extends BaseComponent {
@@ -81,7 +77,6 @@ class ScrollSpy extends BaseComponent {
   }
 
   // Getters
-
   static get Default() {
     return Default
   }
@@ -91,7 +86,6 @@ class ScrollSpy extends BaseComponent {
   }
 
   // Public
-
   refresh() {
     const autoMethod = this._scrollElement === this._scrollElement.window ?
       METHOD_OFFSET :
@@ -110,25 +104,26 @@ class ScrollSpy extends BaseComponent {
     this._scrollHeight = this._getScrollHeight()
 
     const targets = SelectorEngine.find(SELECTOR_LINK_ITEMS, this._config.target)
+      .map(element => {
+        const targetSelector = getSelectorFromElement(element)
+        const target = targetSelector ? SelectorEngine.findOne(targetSelector) : null
 
-    for (const item of targets.map(element => {
-      const targetSelector = getSelectorFromElement(element)
-      const target = targetSelector ? SelectorEngine.findOne(targetSelector) : null
-
-      if (target) {
-        const targetBCR = target.getBoundingClientRect()
-        if (targetBCR.width || targetBCR.height) {
-          return [
-            Manipulator[offsetMethod](target).top + offsetBase,
-            targetSelector
-          ]
+        if (target) {
+          const targetBCR = target.getBoundingClientRect()
+          if (targetBCR.width || targetBCR.height) {
+            return [
+              Manipulator[offsetMethod](target).top + offsetBase,
+              targetSelector
+            ]
+          }
         }
-      }
 
-      return null
-    })
-      .filter(item => item)
-      .sort((a, b) => a[0] - b[0])) {
+        return null
+      })
+        .filter(item => item)
+        .sort((a, b) => a[0] - b[0])
+
+    for (const item of targets) {
       this._offsets.push(item[0])
       this._targets.push(item[1])
     }
@@ -140,7 +135,6 @@ class ScrollSpy extends BaseComponent {
   }
 
   // Private
-
   _getConfig(config) {
     config = {
       ...Default,
@@ -256,7 +250,6 @@ class ScrollSpy extends BaseComponent {
   }
 
   // Static
-
   static jQueryInterface(config) {
     return this.each(function () {
       const data = ScrollSpy.getOrCreateInstance(this, config)
@@ -275,9 +268,7 @@ class ScrollSpy extends BaseComponent {
 }
 
 /**
- * ------------------------------------------------------------------------
- * Data Api implementation
- * ------------------------------------------------------------------------
+ * Data API implementation
  */
 
 EventHandler.on(window, EVENT_LOAD_DATA_API, () => {
@@ -287,10 +278,7 @@ EventHandler.on(window, EVENT_LOAD_DATA_API, () => {
 })
 
 /**
- * ------------------------------------------------------------------------
  * jQuery
- * ------------------------------------------------------------------------
- * add .ScrollSpy to jQuery only if jQuery is present
  */
 
 defineJQueryPlugin(ScrollSpy)
