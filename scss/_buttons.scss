@@ -1,3 +1,5 @@
+// stylelint-disable custom-property-empty-line-before
+
 //
 // Base styles
 //
@@ -6,7 +8,7 @@
   // scss-docs-start btn-css-vars
   --#{$variable-prefix}btn-padding: #{$btn-padding-y} #{$btn-padding-x};
   --#{$variable-prefix}btn-font-family: #{$btn-font-family};
-  --#{$variable-prefix}btn-font-size: #{$btn-font-size};
+  @include rfs($btn-font-size, --#{$variable-prefix}btn-font-size);
   --#{$variable-prefix}btn-font-weight: #{$btn-font-weight};
   --#{$variable-prefix}btn-line-height: #{$btn-line-height};
   --#{$variable-prefix}btn-color: #{$body-color};
