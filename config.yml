@@ -3,6 +3,7 @@ title:                  "Bootstrap"
 baseURL:                "https://getbootstrap.com"
 enableInlineShortcodes: true
 
+
 markup:
   goldmark:
     renderer:
