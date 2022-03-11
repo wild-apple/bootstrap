@@ -3,6 +3,7 @@ title:                  "Bootstrap"
 baseURL:                "https://getbootstrap.com"
 enableInlineShortcodes: true
 
+#comment for new cineplex
 markup:
   goldmark:
     renderer:
